@@ -1,0 +1,29 @@
+{
+    "name": "encoredigitalgroup/tachyon",
+    "description": "Additional Date Helpers for nesbot/carbon",
+    "type": "library",
+    "license": "AGPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "EncoreDigitalGroup\\Tachyon\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marc Beinder",
+            "email": "marc@marcbeinder.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.70"
+    },
+    "require-dev": {
+        "tightenco/duster": "^2.3"
+    },
+    "scripts": {
+        "format": "vendor/bin/duster fix"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

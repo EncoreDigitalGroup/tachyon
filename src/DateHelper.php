@@ -20,7 +20,7 @@ class DateHelper
         $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->subHours(1);
         $Now = Carbon::now()->setTimezone($Timezone);
         $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->isToday();
-        if ($StartTime >= $OneHourFromStartTime && $Now < $StartTime && $IsToday) {
+        if (($Now < $StartTime) && ($Now > $OneHourFromStartTime) && ($IsToday)) {
             return true;
         }
 

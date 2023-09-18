@@ -1,5 +1,6 @@
 {
     "name": "encoredigitalgroup/tachyon",
+    "version": "0.1.0",
     "description": "Additional Date Helpers for nesbot/carbon",
     "type": "library",
     "license": "AGPL-3.0-or-later",

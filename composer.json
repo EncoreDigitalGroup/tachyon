@@ -17,10 +17,10 @@
         }
     ],
     "require": {
-        "nesbot/carbon": "^2.70"
+        "nesbot/carbon": "~2.70"
     },
     "require-dev": {
-        "tightenco/duster": "^2.3"
+        "tightenco/duster": "~2.3"
     },
     "scripts": {
         "format": "vendor/bin/duster fix"

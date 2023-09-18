@@ -6,20 +6,22 @@ use Carbon\Carbon;
 
 class DateHelper
 {
-    protected string $timezone;
-    
-    public function __construct($timezone = 'UTC')
+    protected string $source_timezone;
+    protected string $target_timezone;
+
+    public function __construct($target_timezone = 'UTC', $source_timezone = 'UTC')
     {
-        $this->timezone = $timezone;
+        $this->source_timezone = $source_timezone;
+        $this->target_timezone = $target_timezone;
     }
-    
+
     public function happeningSoon($start_time)
     {
-        $Timezone = $this->timezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone);
-        $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->subHours(1);
-        $Now = Carbon::now()->setTimezone($Timezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->isToday();
+        $TargetTimezone = $this->target_timezone;
+        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
+        $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(1);
+        $Now = Carbon::now()->setTimezone($TargetTimezone);
+        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
         if (($Now < $StartTime) && ($Now > $OneHourFromStartTime) && ($IsToday)) {
             return true;
         }
@@ -29,11 +31,11 @@ class DateHelper
 
     public function happeningNow($start_time, $end_time)
     {
-        $Timezone = $this->timezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone);
-        $EndTime = Carbon::createFromFormat('Y-m-d H:i:s', $end_time)->setTimezone($Timezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->isToday();
-        if ($StartTime < Carbon::now()->setTimezone($Timezone) && $EndTime > Carbon::now()->setTimezone($Timezone) && $IsToday) {
+        $TargetTimezone = $this->target_timezone;
+        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
+        $EndTime = Carbon::createFromFormat('Y-m-d H:i:s', $end_time)->setTimezone($TargetTimezone);
+        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
+        if ($StartTime < Carbon::now()->setTimezone($TargetTimezone) && $EndTime > Carbon::now()->setTimezone($TargetTimezone) && $IsToday) {
             return true;
         }
 
@@ -42,11 +44,24 @@ class DateHelper
 
     public function withinThreeHours($start_time)
     {
-        $Timezone = $this->timezone;
-        $Now = Carbon::now()->setTimezone($Timezone);
+        $TargetTimezone = $this->target_timezone;
+        $Now = Carbon::now()->setTimezone($TargetTimezone);
         $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time);
-        $ThreeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($Timezone)->subHours(3);
+        $ThreeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(3);
         if ($Now > $ThreeHoursBefore && $Now < $StartTime) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isToday($start_time)
+    {
+        $TargetTimezone = $this->target_timezone;
+        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
+        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
+        $Now = Carbon::now()->setTimezone($TargetTimezone);
+        if ($IsToday && $Now < $StartTime) {
             return true;
         }
 

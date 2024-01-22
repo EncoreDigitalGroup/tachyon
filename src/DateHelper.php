@@ -15,8 +15,12 @@ class DateHelper
         $this->target_timezone = $target_timezone;
     }
 
-    public function happeningSoon($start_time)
+    public function happeningSoon($start_time = null)
     {
+        if($start_time == null) {
+            return false;
+        }
+        
         $TargetTimezone = $this->target_timezone;
         $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
         $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(1);
@@ -29,8 +33,12 @@ class DateHelper
         return false;
     }
 
-    public function happeningNow($start_time, $end_time)
+    public function happeningNow($start_time = null, $end_time = null)
     {
+        if($start_time == null || $end_time == null) {
+            return false;
+        }
+        
         $TargetTimezone = $this->target_timezone;
         $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
         $EndTime = Carbon::createFromFormat('Y-m-d H:i:s', $end_time)->setTimezone($TargetTimezone);
@@ -42,8 +50,12 @@ class DateHelper
         return false;
     }
 
-    public function withinThreeHours($start_time)
+    public function withinThreeHours($start_time = null)
     {
+        if($start_time == null) {
+            return false;
+        }
+        
         $TargetTimezone = $this->target_timezone;
         $Now = Carbon::now()->setTimezone($TargetTimezone);
         $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time);
@@ -55,8 +67,12 @@ class DateHelper
         return false;
     }
 
-    public function isToday($start_time)
+    public function isToday($start_time = null)
     {
+        if($start_time == null) {
+            return false;
+        }
+        
         $TargetTimezone = $this->target_timezone;
         $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
         $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();

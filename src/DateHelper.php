@@ -15,7 +15,7 @@ class DateHelper
         $this->target_timezone = $target_timezone;
     }
 
-    public function happeningSoon($start_time = null)
+    public function happeningSoon($start_time = null): bool
     {
         if($start_time == null) {
             return false;
@@ -33,7 +33,7 @@ class DateHelper
         return false;
     }
 
-    public function happeningNow($start_time = null, $end_time = null)
+    public function happeningNow($start_time = null, $end_time = null): bool
     {
         if($start_time == null || $end_time == null) {
             return false;
@@ -50,7 +50,7 @@ class DateHelper
         return false;
     }
 
-    public function withinThreeHours($start_time = null)
+    public function withinThreeHours($start_time = null): bool
     {
         if($start_time == null) {
             return false;
@@ -67,7 +67,7 @@ class DateHelper
         return false;
     }
 
-    public function isToday($start_time = null)
+    public function isToday($start_time = null): bool
     {
         if($start_time == null) {
             return false;

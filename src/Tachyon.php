@@ -15,6 +15,16 @@ class Tachyon
         $this->target_timezone = $target_timezone;
     }
 
+    public function set_source($source_timezone = 'UTC'): void
+    {
+        $this->source_timezone = $source_timezone;
+    }
+
+    public function set_target($target_timezone = 'UTC'): void
+    {
+        $this->target_timezone = $target_timezone;
+    }
+
     public function startingSoon($start_time = null): bool
     {
         if($start_time == null) {

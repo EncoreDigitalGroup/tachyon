@@ -2,95 +2,50 @@
 
 namespace EncoreDigitalGroup\Tachyon;
 
-use Carbon\Carbon;
+use EncoreDigitalGroup\Tachyon\Traits\KeyTimeIndicators;
+use EncoreDigitalGroup\Tachyon\Traits\TimeDiff;
 
 class Tachyon
 {
-    protected string $source_timezone;
-    protected string $target_timezone;
+    use KeyTimeIndicators;
+    use TimeDiff;
+
+    protected string $sourceTimezone;
+    protected string $targetTimezone;
 
     public function __construct($source_timezone = 'UTC', $target_timezone = 'UTC')
     {
-        $this->source_timezone = $source_timezone;
-        $this->target_timezone = $target_timezone;
+        $this->sourceTimezone = $source_timezone;
+        $this->targetTimezone = $target_timezone;
     }
 
-    public function set_source($source_timezone = 'UTC'): void
+    /**
+     * @param string $source_timezone
+     * @deprecated use setSource instead
+     */
+    public function set_source(string $source_timezone = 'UTC'): void
     {
-        $this->source_timezone = $source_timezone;
+        $this->setSource($source_timezone);
     }
 
-    public function set_target($target_timezone = 'UTC'): void
+    public function setSource(string $sourceTimezone = 'UTC'): void
     {
-        $this->target_timezone = $target_timezone;
+        $this->sourceTimezone = $sourceTimezone;
     }
 
-    public function startingSoon($start_time = null): bool
+    /**
+     * @param string $target_timezone
+     * @deprecated use setTarget instead
+     */
+    public function set_target(string $target_timezone = 'UTC'): void
     {
-        if($start_time == null) {
-            return false;
-        }
-
-        $TargetTimezone = $this->target_timezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(1);
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        if (($Now < $StartTime) && ($Now > $OneHourFromStartTime) && ($IsToday)) {
-            return true;
-        }
-
-        return false;
+        $this->setTarget($target_timezone);
     }
 
-    public function happeningNow($start_time = null, $end_time = null): bool
+    public function setTarget(string $targetTimezone = 'UTC'): void
     {
-        if($start_time == null || $end_time == null) {
-            return false;
-        }
-
-        $TargetTimezone = $this->target_timezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $EndTime = Carbon::createFromFormat('Y-m-d H:i:s', $end_time)->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        if ($StartTime < Carbon::now()->setTimezone($TargetTimezone) && $EndTime > Carbon::now()->setTimezone($TargetTimezone) && $IsToday) {
-            return true;
-        }
-
-        return false;
+        $this->targetTimezone = $targetTimezone;
     }
 
-    public function withinThreeHours($start_time = null): bool
-    {
-        if($start_time == null) {
-            return false;
-        }
 
-        $TargetTimezone = $this->target_timezone;
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time);
-        $ThreeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(3);
-        if ($Now > $ThreeHoursBefore && $Now < $StartTime) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function isToday($start_time = null): bool
-    {
-        if($start_time == null) {
-            return false;
-        }
-
-        $TargetTimezone = $this->target_timezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        if ($IsToday && $Now < $StartTime) {
-            return true;
-        }
-
-        return false;
-    }
 }

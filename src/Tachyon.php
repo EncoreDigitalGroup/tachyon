@@ -13,10 +13,10 @@ class Tachyon
     protected string $sourceTimezone;
     protected string $targetTimezone;
 
-    public function __construct($source_timezone = 'UTC', $target_timezone = 'UTC')
+    public function __construct($targetTimezone = 'UTC', $sourceTimezone = 'UTC')
     {
-        $this->sourceTimezone = $source_timezone;
-        $this->targetTimezone = $target_timezone;
+        $this->sourceTimezone = $sourceTimezone;
+        $this->targetTimezone = $targetTimezone;
     }
 
     /**

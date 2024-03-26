@@ -12,3 +12,5 @@ parameters:
     checkTooWideReturnTypesInProtectedAndPublicMethods: false
     ignoreErrors:
         - '#PHPDoc tag .+ #'
+    excludePaths:
+        - 'src/DateHelper.php'

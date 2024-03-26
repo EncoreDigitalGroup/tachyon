@@ -13,19 +13,19 @@ class Tachyon
     protected string $sourceTimezone;
     protected string $targetTimezone;
 
-    public function __construct($targetTimezone = 'UTC', $sourceTimezone = 'UTC')
+    public function __construct(string $targetTimezone = 'UTC', string $sourceTimezone = 'UTC')
     {
         $this->sourceTimezone = $sourceTimezone;
         $this->targetTimezone = $targetTimezone;
     }
 
     /**
-     * @param string $source_timezone
+     * @param string $sourceTimezone
      * @deprecated use setSource instead
      */
-    public function set_source(string $source_timezone = 'UTC'): void
+    public function set_source(string $sourceTimezone = 'UTC'): void
     {
-        $this->setSource($source_timezone);
+        $this->setSource($sourceTimezone);
     }
 
     public function setSource(string $sourceTimezone = 'UTC'): void
@@ -34,12 +34,12 @@ class Tachyon
     }
 
     /**
-     * @param string $target_timezone
+     * @param string $targetTimezone
      * @deprecated use setTarget instead
      */
-    public function set_target(string $target_timezone = 'UTC'): void
+    public function set_target(string $targetTimezone = 'UTC'): void
     {
-        $this->setTarget($target_timezone);
+        $this->setTarget($targetTimezone);
     }
 
     public function setTarget(string $targetTimezone = 'UTC'): void

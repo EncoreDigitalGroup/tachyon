@@ -17,15 +17,15 @@ trait TimeDiff
 
         $sourceDateTime = Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now(), $this->targetTimezone);
 
-        if (!$sourceDateTime) {
-            throw new TachyonException();
+        if (! $sourceDateTime) {
+            throw new TachyonException;
         }
 
         $sourceDateTime->toDateTimeString();
 
         $targetDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $targetDateTimeString, $this->targetTimezone);
 
-        if (!$targetDateTime) {
+        if (! $targetDateTime) {
             throw new TachyonException('Invalid targetDateTime Provided.');
         }
 

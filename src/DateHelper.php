@@ -4,6 +4,10 @@ namespace EncoreDigitalGroup\Tachyon;
 
 use Carbon\Carbon;
 
+/**
+ * @package EncoreDigitalGroup\Tachyon
+ * @deprecated Use the Tachyon class instead.
+ */
 class DateHelper
 {
     protected string $source_timezone;

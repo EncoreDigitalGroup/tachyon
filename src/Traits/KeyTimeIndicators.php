@@ -3,72 +3,123 @@
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use Carbon\Carbon;
+use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
+use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
 
 trait KeyTimeIndicators
 {
-    public function startingSoon($start_time = null): bool
+    /**
+     * @throws InvalidStartTimeProvidedException
+     */
+    public function startingSoon(?string $startTime = null): bool
     {
-        if($start_time == null) {
+        if ($startTime == null) {
             return false;
         }
 
-        $TargetTimezone = $this->targetTimezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $OneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(1);
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        if (($Now < $StartTime) && ($Now > $OneHourFromStartTime) && ($IsToday)) {
+        $targetTimezone = $this->targetTimezone;
+
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+
+        if (! $startDateTime) {
+            throw new InvalidStartTimeProvidedException;
+        }
+
+        $startDateTime = $startDateTime->setTimezone($targetTimezone);
+        $oneHourFromStartTime = $startDateTime->subHours(1);
+        $now = Carbon::now()->setTimezone($targetTimezone);
+        $isToday = $startDateTime->isToday();
+
+        if (($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday)) {
             return true;
         }
 
         return false;
     }
 
-    public function happeningNow($start_time = null, $end_time = null): bool
+    /**
+     * @throws InvalidStartTimeProvidedException
+     * @throws InvalidEndTimeProvidedException
+     */
+    public function happeningNow(?string $startTime = null, ?string $endTime = null): bool
     {
-        if($start_time == null || $end_time == null) {
+        if ($startTime == null || $endTime == null) {
             return false;
         }
 
-        $TargetTimezone = $this->targetTimezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $EndTime = Carbon::createFromFormat('Y-m-d H:i:s', $end_time)->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        if ($StartTime < Carbon::now()->setTimezone($TargetTimezone) && $EndTime > Carbon::now()->setTimezone($TargetTimezone) && $IsToday) {
+        $targetTimezone = $this->targetTimezone;
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $endTime);
+
+        if (! $startDateTime) {
+            throw new InvalidStartTimeProvidedException;
+        }
+
+        if (! $endDateTime) {
+            throw new InvalidEndTimeProvidedException;
+        }
+
+        $startDateTime->setTimezone($targetTimezone);
+        $endDateTime->setTimezone($targetTimezone);
+        $isToday = $startDateTime->isToday();
+
+        if ($startDateTime < Carbon::now()->setTimezone($targetTimezone) && $endDateTime > Carbon::now()->setTimezone($targetTimezone) && $isToday) {
             return true;
         }
 
         return false;
     }
 
-    public function withinThreeHours($start_time = null): bool
+    /**
+     * @throws InvalidStartTimeProvidedException
+     */
+    public function withinThreeHours(?string $startTime = null): bool
     {
-        if($start_time == null) {
+        if ($startTime == null) {
             return false;
         }
 
-        $TargetTimezone = $this->targetTimezone;
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time);
-        $ThreeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->subHours(3);
-        if ($Now > $ThreeHoursBefore && $Now < $StartTime) {
+        $targetTimezone = $this->targetTimezone;
+        $now = Carbon::now()->setTimezone($targetTimezone);
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+
+        if (! $startDateTime) {
+            throw new InvalidStartTimeProvidedException;
+        }
+
+        $startDateTime->setTimezone($targetTimezone);
+
+        $threeHoursBefore = $startDateTime->subHours(3);
+
+        if ($now > $threeHoursBefore && $now < $startDateTime) {
             return true;
         }
 
         return false;
     }
 
-    public function isToday($start_time = null): bool
+    /**
+     * @throws InvalidStartTimeProvidedException
+     */
+    public function isToday(?string $startTime = null): bool
     {
-        if($start_time == null) {
+        if ($startTime == null) {
             return false;
         }
 
-        $TargetTimezone = $this->targetTimezone;
-        $StartTime = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone);
-        $IsToday = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)->setTimezone($TargetTimezone)->isToday();
-        $Now = Carbon::now()->setTimezone($TargetTimezone);
-        if ($IsToday && $Now < $StartTime) {
+        $targetTimezone = $this->targetTimezone;
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+
+        if (! $startDateTime) {
+            throw new InvalidStartTimeProvidedException;
+        }
+
+        $startDateTime = $startDateTime->setTimezone($targetTimezone);
+
+        $isToday = $startDateTime->isToday();
+        $now = Carbon::now()->setTimezone($targetTimezone);
+
+        if ($isToday && $now < $startDateTime) {
             return true;
         }
 

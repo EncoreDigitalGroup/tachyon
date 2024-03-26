@@ -21,14 +21,14 @@ trait KeyTimeIndicators
 
         $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
 
-        if (! $startDateTime) {
+        if (!$startDateTime) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($targetTimezone);
-        $oneHourFromStartTime = $startDateTime->subHours(1);
+        $oneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->subHours(1); // @phpstan-ignore-line
         $now = Carbon::now()->setTimezone($targetTimezone);
-        $isToday = $startDateTime->isToday();
+        $isToday = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->isToday(); // @phpstan-ignore-line
 
         if (($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday)) {
             return true;
@@ -87,9 +87,9 @@ trait KeyTimeIndicators
             throw new InvalidStartTimeProvidedException;
         }
 
-        $startDateTime->setTimezone($targetTimezone);
+        $startDateTime = $startDateTime->setTimezone($targetTimezone);
 
-        $threeHoursBefore = $startDateTime->subHours(3);
+        $threeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->subHours(3); // @phpstan-ignore-line
 
         if ($now > $threeHoursBefore && $now < $startDateTime) {
             return true;

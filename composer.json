@@ -11,6 +11,11 @@
       "src/helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "EncoreDigitalGroup\\Tachyon\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Encore Digital Group",
@@ -28,13 +33,20 @@
     "nesbot/carbon": "^2.70"
   },
   "require-dev": {
+    "pestphp/pest": "^2.34",
     "phpstan/phpstan": "^1.10",
     "rector/rector": "^1.0",
     "tightenco/duster": "^2.3"
   },
   "scripts": {
-    "format": "vendor/bin/duster fix"
+    "format": "vendor/bin/duster fix",
+    "test": "vendor/bin/pest"
   },
   "minimum-stability": "stable",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
 }

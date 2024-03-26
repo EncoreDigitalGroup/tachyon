@@ -24,8 +24,18 @@ class Tachyon
         $this->sourceTimezone = $sourceTimezone;
     }
 
+    public function getSource(): string
+    {
+        return $this->sourceTimezone;
+    }
+
     public function setTarget(string $targetTimezone = 'UTC'): void
     {
         $this->targetTimezone = $targetTimezone;
+    }
+
+    public function getTarget(): string
+    {
+        return $this->targetTimezone;
     }
 }

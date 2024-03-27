@@ -21,7 +21,7 @@ trait KeyTimeIndicators
 
         $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
 
-        if (!$startDateTime) {
+        if (! $startDateTime) {
             throw new InvalidStartTimeProvidedException;
         }
 

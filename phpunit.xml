@@ -4,6 +4,7 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
+
     <testsuites>
         <testsuite name="Test Suite">
             <directory suffix="Test.php">./tests</directory>
@@ -14,5 +15,10 @@
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./src</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">./src/Exceptions</directory>
+            <file>./src/DateHelper.php</file>
+            <file>./src/helpers.php</file>
+        </exclude>
     </source>
 </phpunit>

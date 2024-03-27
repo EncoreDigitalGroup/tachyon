@@ -40,7 +40,8 @@
   },
   "scripts": {
     "format": "vendor/bin/duster fix",
-    "test": "vendor/bin/pest"
+    "test": "vendor/bin/pest",
+    "coverage": "vendor/bin/pest --coverage --min=80"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

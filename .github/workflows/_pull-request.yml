@@ -20,7 +20,11 @@ jobs:
     uses: EncoreDigitalGroup/.github/.github/workflows/larastan.yml@main
     with:
       path: 'src/'
-  AutoMerge:
+  UnitTests:
     needs: StaticAnalysis
+    name: Run Tests
+    uses: EncoreDigitalGroup/.github/.github/workflows/pest.yml@main
+  AutoMerge:
+    needs: UnitTests
     name: AutoMerge
     uses: EncoreDigitalGroup/.github/.github/workflows/dependabot-auto-merge.yml@main

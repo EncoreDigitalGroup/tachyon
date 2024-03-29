@@ -2,7 +2,7 @@
   "name": "encoredigitalgroup/tachyon",
   "description": "Additional Date Helpers for nesbot/carbon",
   "type": "library",
-  "license": "AGPL-3.0-or-later",
+  "license": "proprietary",
   "autoload": {
     "psr-4": {
       "EncoreDigitalGroup\\Tachyon\\": "src/"

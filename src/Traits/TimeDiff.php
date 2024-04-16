@@ -11,7 +11,7 @@ trait TimeDiff
     /**
      * @throws TachyonException
      */
-    public function unixDiffInSeconds(Carbon|DateTime $targetDateTime): float|int
+    public function unixDiffInSeconds(DateTime $targetDateTime): float|int
     {
         $targetDateTimeString = $targetDateTime->format('Y-m-d H:i:s');
 

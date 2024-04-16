@@ -17,7 +17,6 @@
         </include>
         <exclude>
             <directory suffix=".php">./src/Exceptions</directory>
-            <file>./src/DateHelper.php</file>
             <file>./src/helpers.php</file>
         </exclude>
     </source>

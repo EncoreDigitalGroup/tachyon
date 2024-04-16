@@ -18,8 +18,8 @@ test('Starting Soon is False', function () {
 });
 
 test('Happening Now is True', function () {
-    $startTime = Carbon::now()->subHours(2)->toDateTimeString();
-    $endTime = Carbon::now()->addHours(3)->toDateTimeString();
+    $startTime = Carbon::now()->subHours(6)->toDateTimeString();
+    $endTime = Carbon::now()->addHours(5)->toDateTimeString();
     $tachyon = new Tachyon;
 
     expect($tachyon->happeningNow($startTime, $endTime))->toBeTrue();

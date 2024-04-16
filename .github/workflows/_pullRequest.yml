@@ -10,21 +10,21 @@ permissions:
 jobs:
   Duster:
     name: Duster
-    uses: EncoreDigitalGroup/.github/.github/workflows/duster-fix-blame.yml@main
+    uses: EncoreDigitalGroup/.github/.github/workflows/dusterFixBlame.yml@main
     permissions:
       contents: write
       pull-requests: write
   StaticAnalysis:
     needs: Duster
     name: StaticAnalysis
-    uses: EncoreDigitalGroup/.github/.github/workflows/larastan.yml@main
+    uses: EncoreDigitalGroup/.github/.github/workflows/larastan.yml@latest
     with:
       path: 'src/'
   UnitTests:
     needs: StaticAnalysis
     name: Run Tests
-    uses: EncoreDigitalGroup/.github/.github/workflows/pest.yml@main
+    uses: EncoreDigitalGroup/.github/.github/workflows/pest.yml@latest
   AutoMerge:
     needs: UnitTests
     name: AutoMerge
-    uses: EncoreDigitalGroup/.github/.github/workflows/dependabot-auto-merge.yml@main
+    uses: EncoreDigitalGroup/.github/.github/workflows/dependabotAutoMerge.yml@latest

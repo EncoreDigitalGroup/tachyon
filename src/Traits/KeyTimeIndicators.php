@@ -48,8 +48,8 @@ trait KeyTimeIndicators
         }
 
         $targetTimezone = $this->targetTimezone;
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
-        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $endTime);
+        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime, $targetTimezone);
+        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $endTime, $targetTimezone);
 
         if (! $startDateTime) {
             throw new InvalidStartTimeProvidedException;
@@ -59,11 +59,7 @@ trait KeyTimeIndicators
             throw new InvalidEndTimeProvidedException;
         }
 
-        $startDateTime->setTimezone($targetTimezone);
-        $endDateTime->setTimezone($targetTimezone);
-        $isToday = $startDateTime->isToday();
-
-        if ($startDateTime < Carbon::now()->setTimezone($targetTimezone) && $endDateTime > Carbon::now()->setTimezone($targetTimezone) && $isToday) {
+        if ($startDateTime < Carbon::now($targetTimezone) && $endDateTime > Carbon::now($targetTimezone)) {
             return true;
         }
 

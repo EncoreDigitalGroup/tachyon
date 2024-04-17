@@ -27,4 +27,4 @@ jobs:
   AutoMerge:
     needs: UnitTests
     name: AutoMerge
-    uses: EncoreDigitalGroup/.github/.github/workflows/dependabotAutoMerge.yml@latest
+    uses: EncoreDigitalGroup/.github/.github/workflows/dependabotAutoMerge.yml@v1

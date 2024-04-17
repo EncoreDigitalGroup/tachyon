@@ -9,7 +9,7 @@ on:
 jobs:
   CreateRelease:
     name: Create Release
-    uses: EncoreDigitalGroup/.github/.github/workflows/createRelease.yml@latest
+    uses: EncoreDigitalGroup/.github/.github/workflows/createRelease.yml@v1
     with:
       generate_release_notes: true
       is_draft: false

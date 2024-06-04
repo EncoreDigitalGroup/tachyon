@@ -36,7 +36,7 @@
     "pestphp/pest": "^2.34",
     "phpstan/phpstan": "^1.10",
     "rector/rector": "^1.0",
-    "tightenco/duster": "^2.3"
+    "tightenco/duster": "^2.3 || ^3.0"
   },
   "scripts": {
     "format": "vendor/bin/duster fix",

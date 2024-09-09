@@ -33,7 +33,7 @@
     "nesbot/carbon": "^3.0"
   },
   "require-dev": {
-    "pestphp/pest": "^2.34",
+    "pestphp/pest": "^2.34 || ^3.0",
     "phpstan/phpstan": "^1.10",
     "rector/rector": "^1.0",
     "tightenco/duster": "^2.3 || ^3.0"

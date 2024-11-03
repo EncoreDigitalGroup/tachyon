@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
 
+/** @internal */
 trait KeyTimeIndicators
 {
     /**

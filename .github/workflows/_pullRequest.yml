@@ -1,4 +1,4 @@
-name: Pull Request
+name: PullRequest
 
 on:
   pull_request_target:
@@ -8,23 +8,50 @@ permissions:
   pull-requests: write
 
 jobs:
+  GitStatusCheck:
+    name: GitStatusCheck
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/php_gitStatusCheck.yml@main
+    with:
+      branch: ${{ github.event.repository.default_branch }}
+  
+  FormatTitle:
+    name: FormatTitle
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/formatPullRequestTitle.yml@v1
+    with:
+      branch: ${{ github.head_ref }}
+      pullRequestNumber: ${{ github.event.number }}
+      repository: ${{ github.repository }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+  
   Duster:
     name: Duster
-    uses: EncoreDigitalGroup/.github/.github/workflows/dusterFixBlame.yml@main
+    needs: GitStatusCheck
+    if: needs.GitStatusCheck.outputs.shouldRun == 'true'
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/dusterFixBlame.yml@v1
     permissions:
       contents: write
       pull-requests: write
+  
   StaticAnalysis:
     needs: Duster
     name: StaticAnalysis
-    uses: EncoreDigitalGroup/.github/.github/workflows/larastan.yml@latest
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/larastan.yml@v1
     with:
+      branch: ${{ github.head_ref }}
       path: 'src/'
-  UnitTests:
-    needs: StaticAnalysis
-    name: Run Tests
-    uses: EncoreDigitalGroup/.github/.github/workflows/pest.yml@latest
+      phpVersion: '8.3'
+  
+  Test:
+    needs: Duster
+    name: Test
+    uses: EncoreDigitalGroup/ci-workflows/.github/workflows/pest.yml@v1
+    with:
+      phpVersion: '8.3'
+      branch: ${{ github.head_ref }}
+      enforceCoverage: false
+  
   AutoMerge:
-    needs: UnitTests
+    needs: [ StaticAnalysis, Test ]
     name: AutoMerge
     uses: EncoreDigitalGroup/.github/.github/workflows/dependabotAutoMerge.yml@v1

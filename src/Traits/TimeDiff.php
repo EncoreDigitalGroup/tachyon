@@ -6,11 +6,10 @@ use Carbon\Carbon;
 use DateTime;
 use EncoreDigitalGroup\Tachyon\Exceptions\TachyonException;
 
+/** @internal */
 trait TimeDiff
 {
-    /**
-     * @throws TachyonException
-     */
+    /** @throws TachyonException */
     public function unixDiffInSeconds(DateTime $targetDateTime): float|int
     {
         $targetDateTimeString = $targetDateTime->format('Y-m-d H:i:s');

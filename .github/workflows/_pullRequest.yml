@@ -49,7 +49,7 @@ jobs:
     with:
       phpVersion: '8.3'
       branch: ${{ github.head_ref }}
-      enforceCoverage: false
+      enforceCoverage: true
   
   AutoMerge:
     needs: [ StaticAnalysis, Test ]

@@ -9,7 +9,7 @@ use Carbon\Exceptions\InvalidFormatException;
 /** @internal */
 trait GenericHelpers
 {
-    protected string $targetTimezone;
+    protected string $targetTimezone = "UTC";
 
     public static function fromArrayIndex(array $array, int|string $index, string $format): ?static
     {

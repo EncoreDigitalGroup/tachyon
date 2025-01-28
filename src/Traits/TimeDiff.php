@@ -12,18 +12,18 @@ trait TimeDiff
     /** @throws TachyonException */
     public function unixDiffInSeconds(DateTime $targetDateTime): float|int
     {
-        $targetDateTimeString = $targetDateTime->format('Y-m-d H:i:s');
+        $targetDateTimeString = $targetDateTime->format("Y-m-d H:i:s");
 
         $sourceDateTime = Carbon::now()->setTimezone($this->targetTimezone)->toDateTimeString();
 
-        if (! $sourceDateTime) {
+        if ($sourceDateTime === '' || $sourceDateTime === '0') {
             throw new TachyonException;
         }
 
-        $targetDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $targetDateTimeString, $this->targetTimezone);
+        $targetDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $targetDateTimeString, $this->targetTimezone);
 
-        if (! $targetDateTime) {
-            throw new TachyonException('Invalid targetDateTime Provided.');
+        if (!$targetDateTime instanceof \Carbon\Carbon) {
+            throw new TachyonException("Invalid targetDateTime Provided.");
         }
 
         return (int) round($targetDateTime->diffInSeconds($sourceDateTime, true));

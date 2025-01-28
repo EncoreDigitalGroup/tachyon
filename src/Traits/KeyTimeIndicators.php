@@ -20,22 +20,19 @@ trait KeyTimeIndicators
 
         $targetTimezone = $this->targetTimezone;
 
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+        $startDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $startTime);
 
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof \Carbon\Carbon) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($targetTimezone);
-        $oneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->subHours(1); // @phpstan-ignore-line
+        $oneHourFromStartTime = Carbon::createFromFormat("Y-m-d H:i:s", $startTime)->subHours(1); // @phpstan-ignore-line
         $now = Carbon::now()->setTimezone($targetTimezone);
-        $isToday = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->isToday(); // @phpstan-ignore-line
+        $isToday = Carbon::createFromFormat("Y-m-d H:i:s", $startTime)->setTimezone($targetTimezone)->isToday();
 
-        if (($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday)) {
-            return true;
-        }
-
-        return false;
+        // @phpstan-ignore-line
+        return ($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday);
     }
 
     /**
@@ -49,22 +46,18 @@ trait KeyTimeIndicators
         }
 
         $targetTimezone = $this->targetTimezone;
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime, $targetTimezone);
-        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $endTime, $targetTimezone);
+        $startDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $startTime, $targetTimezone);
+        $endDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $endTime, $targetTimezone);
 
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof \Carbon\Carbon) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        if (! $endDateTime) {
+        if (!$endDateTime instanceof \Carbon\Carbon) {
             throw new InvalidEndTimeProvidedException;
         }
 
-        if ($startDateTime < Carbon::now($targetTimezone) && $endDateTime > Carbon::now($targetTimezone)) {
-            return true;
-        }
-
-        return false;
+        return $startDateTime < Carbon::now($targetTimezone) && $endDateTime > Carbon::now($targetTimezone);
     }
 
     /**
@@ -78,21 +71,18 @@ trait KeyTimeIndicators
 
         $targetTimezone = $this->targetTimezone;
         $now = Carbon::now()->setTimezone($targetTimezone);
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+        $startDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $startTime);
 
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof \Carbon\Carbon) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($targetTimezone);
 
-        $threeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->subHours(3); // @phpstan-ignore-line
+        $threeHoursBefore = Carbon::createFromFormat("Y-m-d H:i:s", $startTime)->setTimezone($targetTimezone)->subHours(3);
 
-        if ($now > $threeHoursBefore && $now < $startDateTime) {
-            return true;
-        }
-
-        return false;
+        // @phpstan-ignore-line
+        return $now > $threeHoursBefore && $now < $startDateTime;
     }
 
     /**
@@ -105,9 +95,9 @@ trait KeyTimeIndicators
         }
 
         $targetTimezone = $this->targetTimezone;
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
+        $startDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $startTime);
 
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof \Carbon\Carbon) {
             throw new InvalidStartTimeProvidedException;
         }
 
@@ -116,10 +106,6 @@ trait KeyTimeIndicators
         $isToday = $startDateTime->isToday();
         $now = Carbon::now()->setTimezone($targetTimezone);
 
-        if ($isToday && $now < $startDateTime) {
-            return true;
-        }
-
-        return false;
+        return $isToday && $now < $startDateTime;
     }
 }

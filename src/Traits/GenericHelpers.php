@@ -21,6 +21,6 @@ trait GenericHelpers
 
     public static function mdyFromArrayIndex(array $array, int|string $index): ?Carbon
     {
-        return static::fromArrayIndex($array, $index, 'm/d/y');
+        return static::fromArrayIndex($array, $index, "m/d/y");
     }
 }

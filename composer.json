@@ -1,57 +1,54 @@
 {
-  "name": "encoredigitalgroup/tachyon",
-  "description": "Additional Date Helpers for nesbot/carbon",
-  "type": "library",
-  "license": "proprietary",
-  "autoload": {
-    "psr-4": {
-      "EncoreDigitalGroup\\Tachyon\\": "src/"
+    "name": "encoredigitalgroup/tachyon",
+    "description": "Additional Date Helpers for nesbot/carbon",
+    "type": "library",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "EncoreDigitalGroup\\Tachyon\\": "src/"
+        }
     },
-    "files": [
-      "src/helpers.php"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "EncoreDigitalGroup\\Tachyon\\Tests\\": "tests/"
-    }
-  },
-  "authors": [
-    {
-      "name": "Encore Digital Group",
-      "email": "opensource@encoredigitalgroup.com",
-      "role": "Maintainer"
+    "autoload-dev": {
+        "psr-4": {
+            "EncoreDigitalGroup\\Tachyon\\Tests\\": "tests/"
+        }
     },
-    {
-      "name": "Marc Beinder",
-      "email": "marc@marcbeinder.com",
-      "role": "Developer"
+    "authors": [
+        {
+            "name": "Encore Digital Group",
+            "email": "opensource@encoredigitalgroup.com",
+            "role": "Maintainer"
+        },
+        {
+            "name": "Marc Beinder",
+            "email": "marc@marcbeinder.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "nesbot/carbon": "^3.0"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.34 || ^3.0",
+        "phpgenesis/devutilities": "^0.2.57",
+        "phpstan/phpstan": "^1.10",
+        "rector/rector": "^1.0",
+        "tightenco/duster": "^2.3 || ^3.0"
+    },
+    "scripts": {
+        "format": "vendor/bin/duster fix",
+        "test": "vendor/bin/pest",
+        "coverage": "vendor/bin/pest --coverage --min=80",
+        "post-autoload-dump": [
+            "PHPGenesis\\Common\\Composer\\Scripts::postAutoloadDump"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
-  ],
-  "require": {
-    "php": "^8.2",
-    "nesbot/carbon": "^3.0"
-  },
-  "require-dev": {
-    "pestphp/pest": "^2.34 || ^3.0",
-    "phpgenesis/devutilities": "^0.2.57",
-    "phpstan/phpstan": "^1.10",
-    "rector/rector": "^1.0",
-    "tightenco/duster": "^2.3 || ^3.0"
-  },
-  "scripts": {
-    "format": "vendor/bin/duster fix",
-    "test": "vendor/bin/pest",
-    "coverage": "vendor/bin/pest --coverage --min=80",
-    "post-autoload-dump": [
-      "PHPGenesis\\Common\\Composer\\Scripts::postAutoloadDump"
-    ]
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true,
-  "config": {
-    "allow-plugins": {
-      "pestphp/pest-plugin": true
-    }
-  }
 }

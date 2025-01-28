@@ -3,6 +3,7 @@
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use DateTime;
 use EncoreDigitalGroup\Tachyon\Exceptions\TachyonException;
 
@@ -14,15 +15,15 @@ trait TimeDiff
     {
         $targetDateTimeString = $targetDateTime->format("Y-m-d H:i:s");
 
-        $sourceDateTime = Carbon::now()->setTimezone($this->targetTimezone)->toDateTimeString();
+        $sourceDateTime = CarbonImmutable::now()->setTimezone($this->targetTimezone)->toDateTimeString();
 
         if ($sourceDateTime === '' || $sourceDateTime === '0') {
             throw new TachyonException;
         }
 
-        $targetDateTime = Carbon::createFromFormat("Y-m-d H:i:s", $targetDateTimeString, $this->targetTimezone);
+        $targetDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $targetDateTimeString, $this->targetTimezone);
 
-        if (!$targetDateTime instanceof \Carbon\Carbon) {
+        if (!$targetDateTime instanceof CarbonImmutable) {
             throw new TachyonException("Invalid targetDateTime Provided.");
         }
 

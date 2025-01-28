@@ -4,12 +4,14 @@ namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonTimeZone;
 use Carbon\Exceptions\InvalidFormatException;
+use DateTimeZone;
 
 /** @internal */
 trait GenericHelpers
 {
-    protected string $targetTimezone = "UTC";
+    protected DateTimeZone|string $targetTimezone = "UTC";
 
     public static function fromArrayIndex(array $array, int|string $index, string $format): ?static
     {

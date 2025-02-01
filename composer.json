@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "EncoreDigitalGroup\\Tachyon\\": "src/"
-        }
+        },
+        "files": [
+            "src/mixins.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

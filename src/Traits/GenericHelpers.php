@@ -3,17 +3,22 @@
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use Carbon\CarbonTimeZone;
+use Carbon\CarbonInterface;
 use Carbon\Exceptions\InvalidFormatException;
 use DateTimeZone;
 
-/** @internal */
+/**
+ * @internal
+ * @mixin CarbonInterface
+ */
 trait GenericHelpers
 {
-    protected DateTimeZone|string $targetTimezone = "UTC";
+    private const string FORMAT_MDY = "m/d/y";
+    private const string TIMEZONE_UTC = "UTC";
 
-    public static function fromArrayIndex(array $array, int|string $index, string $format): ?static
+    protected DateTimeZone|string $targetTimezone = self::TIMEZONE_UTC;
+
+    public static function fromArrayIndex(array $array = [], int|string $index = 0, string $format = self::FORMAT_MDY): ?static
     {
         try {
             $date = static::createFromFormat($format, $array[$index]);
@@ -24,12 +29,12 @@ trait GenericHelpers
         return $date;
     }
 
-    public static function mdyFromArrayIndex(array $array, int|string $index): ?static
+    public static function mdyFromArrayIndex(array $array = [], int|string $index = 0): ?static
     {
-        return static::fromArrayIndex($array, $index, "m/d/y");
+        return static::fromArrayIndex($array, $index);
     }
 
-    public function setTargetTimezone(string $targetTimezone): static
+    public function setTargetTimezone(string $targetTimezone = self::TIMEZONE_UTC): static
     {
         $this->setTimezone($targetTimezone);
 

@@ -2,28 +2,30 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
 
-/** @internal */
+/**
+ * @internal
+ * @mixin CarbonInterface
+ */
 trait KeyTimeIndicators
 {
     use GenericHelpers;
 
     public function startingSoon(): bool
     {
-        $startDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
 
-        if (!$startDateTime instanceof CarbonImmutable) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
-        $oneHourFromStartTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())?->subHours();
-        $now = CarbonImmutable::now()->setTimezone($this->targetTimezone);
-        $isToday = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
+        $oneHourFromStartTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())?->subHours();
+        $now = static::now()->setTimezone($this->targetTimezone);
+        $isToday = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->isToday();
 
@@ -37,32 +39,32 @@ trait KeyTimeIndicators
             return false;
         }
 
-        $startDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $startTime, $this->targetTimezone);
-        $endDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $endTime, $this->targetTimezone);
+        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $startTime, $this->targetTimezone);
+        $endDateTime = static::createFromFormat("Y-m-d H:i:s", $endTime, $this->targetTimezone);
 
-        if (!$startDateTime instanceof CarbonImmutable) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        if (!$endDateTime instanceof CarbonImmutable) {
+        if (!$endDateTime instanceof static) {
             throw new InvalidEndTimeProvidedException;
         }
 
-        return $startDateTime < CarbonImmutable::now($this->targetTimezone) && $endDateTime > CarbonImmutable::now($this->targetTimezone);
+        return $startDateTime < static::now($this->targetTimezone) && $endDateTime > static::now($this->targetTimezone);
     }
 
     public function withinThreeHours(): bool
     {
-        $now = CarbonImmutable::now()->setTimezone($this->targetTimezone);
-        $startDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $now = static::now()->setTimezone($this->targetTimezone);
+        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
 
-        if (!$startDateTime instanceof CarbonImmutable) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
 
-        $threeHoursBefore = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
+        $threeHoursBefore = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->subHours(3);
 
@@ -72,16 +74,16 @@ trait KeyTimeIndicators
 
     public function isToday(): bool
     {
-        $startDateTime = CarbonImmutable::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
 
-        if (!$startDateTime instanceof CarbonImmutable) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
 
         $isToday = $startDateTime->isToday();
-        $now = CarbonImmutable::now()->setTimezone($this->targetTimezone);
+        $now = static::now()->setTimezone($this->targetTimezone);
 
         return $isToday && $now < $startDateTime;
     }

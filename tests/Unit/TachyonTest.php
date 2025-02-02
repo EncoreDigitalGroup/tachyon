@@ -2,28 +2,16 @@
 
 use EncoreDigitalGroup\Tachyon\Tachyon;
 
-test('Source Timezone is America/Chicago', function () {
-    $tachyon = new Tachyon('UTC', 'America/Chicago');
-
-    expect($tachyon->getSource())->toBe('America/Chicago');
-});
-
-test('Target Timezone is America/Chicago', function () {
-    $tachyon = new Tachyon('America/Chicago');
-
-    expect($tachyon->getTarget())->toBe('America/Chicago');
-});
-
-test('Change Source Timezone to America/Chicago', function () {
+test("Timezone is America/Chicago", function (): void {
     $tachyon = new Tachyon;
-    $tachyon->setSource('America/Chicago');
+    $tachyon->setTimezone("America/Chicago");
 
-    expect($tachyon->getSource())->toBe('America/Chicago');
+    expect($tachyon->getTimezone()->getName())->toBe("America/Chicago");
 });
 
-test('Change Target Timezone to America/Chicago', function () {
+test("Target Timezone to America/Chicago", function (): void {
     $tachyon = new Tachyon;
-    $tachyon->setTarget('America/Chicago');
+    $tachyon->setTargetTimezone("America/Chicago");
 
-    expect($tachyon->getTarget())->toBe('America/Chicago');
+    expect($tachyon->getTimezone()->getName())->toBe("America/Chicago");
 });

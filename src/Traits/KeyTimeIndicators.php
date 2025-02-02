@@ -2,9 +2,11 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
+use Carbon\CarbonInterface;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
+use Illuminate\Support\Carbon;
 
 /**
  * @internal
@@ -17,7 +19,7 @@ trait KeyTimeIndicators
     {
         $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
-        if (!$startDateTime instanceof static) {
+        if (!$startDateTime instanceof CarbonInterface) {
             throw new InvalidStartTimeProvidedException;
         }
 
@@ -73,9 +75,9 @@ trait KeyTimeIndicators
 
     public function isToday(): bool
     {
-        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
+        $startDateTime = Carbon::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
-        if (!$startDateTime instanceof static) {
+        if (!$startDateTime instanceof CarbonInterface) {
             throw new InvalidStartTimeProvidedException;
         }
 

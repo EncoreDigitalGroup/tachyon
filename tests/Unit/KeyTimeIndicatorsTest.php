@@ -1,62 +1,53 @@
 <?php
 
-use Carbon\Carbon;
 use EncoreDigitalGroup\Tachyon\Tachyon;
 
-test('Starting Soon is True', function () {
-    $startTime = Carbon::now()->addMinutes(15)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Starting Soon is True", function (): void {
+    $tachyon = Tachyon::now()->addMinutes(15);
 
-    expect($tachyon->startingSoon($startTime))->toBeTrue();
+    expect($tachyon->startingSoon())->toBeTrue();
 });
 
-test('Starting Soon is False', function () {
-    $startTime = Carbon::now()->addHours(2)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Starting Soon is False", function (): void {
+    $tachyon = Tachyon::now()->addHours(2);
 
-    expect($tachyon->startingSoon($startTime))->toBeFalse();
+    expect($tachyon->startingSoon())->toBeFalse();
 });
 
-test('Happening Now is True', function () {
-    $startTime = Carbon::now()->subHours(6)->toDateTimeString();
-    $endTime = Carbon::now()->addHours(5)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Happening Now is True", function (): void {
+    $startTime = Tachyon::now()->subHours(6)->toDateTimeString();
+    $endTime = Tachyon::now()->addHours(5)->toDateTimeString();
 
-    expect($tachyon->happeningNow($startTime, $endTime))->toBeTrue();
+    expect(Tachyon::now()->happeningNow($startTime, $endTime))->toBeTrue();
 });
 
-test('Happening Now is False', function () {
-    $startTime = Carbon::now()->subHours(6)->toDateTimeString();
-    $endTime = Carbon::now()->subHours(5)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Happening Now is False", function (): void {
+    $startTime = Tachyon::now()->subHours(6)->toDateTimeString();
+    $endTime = Tachyon::now()->subHours(5)->toDateTimeString();
 
-    expect($tachyon->happeningNow($startTime, $endTime))->toBeFalse();
+    expect(Tachyon::now()->happeningNow($startTime, $endTime))->toBeFalse();
 });
 
-test('Within Three Hours is True', function () {
-    $startTime = Carbon::now()->addHours(2)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Within Three Hours is True", function (): void {
+    $tachyon = Tachyon::now()->addHours(2);
 
-    expect($tachyon->withinThreeHours($startTime))->toBeTrue();
+    expect($tachyon->withinThreeHours())->toBeTrue();
 });
 
-test('Within Three Hours is False', function () {
-    $startTime = Carbon::now()->addHours(4)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Within Three Hours is False", function (): void {
+    $tachyon = Tachyon::now()->addHours(4);
 
-    expect($tachyon->withinThreeHours($startTime))->toBeFalse();
+    expect($tachyon->withinThreeHours())->toBeFalse();
 });
 
-test('Is Today is True', function () {
-    $startTime = Carbon::now()->addHours(4)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Is Today is True", function (): void {
+    $tachyon = Tachyon::now()->addHours(4);
 
-    expect($tachyon->isToday($startTime))->toBeTrue();
+    expect($tachyon->isToday())->toBeTrue();
 });
 
-test('Is Today is False', function () {
-    $startTime = Carbon::now()->addDays(4)->toDateTimeString();
-    $tachyon = new Tachyon;
+test("Is Today is False", function (): void {
+    $tachyon = Tachyon::now()->addDays(4);
 
-    expect($tachyon->isToday($startTime))->toBeFalse();
+    expect($tachyon->isToday())->toBeFalse();
 });

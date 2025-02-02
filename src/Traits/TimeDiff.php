@@ -18,7 +18,7 @@ trait TimeDiff
 
         $sourceDateTime = static::now()->setTimezone($this->targetTimezone)->toDateTimeString();
 
-        if ($sourceDateTime === "" || $sourceDateTime === "0") {
+        if ($sourceDateTime === '' || $sourceDateTime === '0') {
             throw new TachyonException;
         }
 

@@ -2,21 +2,14 @@
 
 namespace EncoreDigitalGroup\Tachyon;
 
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
 use EncoreDigitalGroup\Tachyon\Traits\GenericHelpers;
 use EncoreDigitalGroup\Tachyon\Traits\KeyTimeIndicators;
 use EncoreDigitalGroup\Tachyon\Traits\TimeDiff;
+use Illuminate\Support\Carbon;
 
-class Tachyon
+class Tachyon extends Carbon
 {
     use GenericHelpers;
     use KeyTimeIndicators;
     use TimeDiff;
-
-    public static function loadMixin(): void
-    {
-        Carbon::mixin(new self);
-        CarbonImmutable::mixin(new self);
-    }
 }

@@ -2,14 +2,12 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\CarbonInterface;
+use Carbon\CarbonImmutable;
 use DateTime;
 use EncoreDigitalGroup\Tachyon\Exceptions\TachyonException;
 
 /**
  * @internal
- *
- * @mixin CarbonInterface
  */
 trait TimeDiff
 {
@@ -19,7 +17,7 @@ trait TimeDiff
     public function unixDiffInSeconds(?DateTime $targetDateTime = null): float|int
     {
         if (is_null($targetDateTime)) {
-            $targetDateTimeString = static::now()->format(self::FORMAT);
+            $targetDateTimeString = CarbonImmutable::now()->format(self::FORMAT);
         } else {
             $targetDateTimeString = $targetDateTime->format(self::FORMAT);
         }

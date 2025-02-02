@@ -2,24 +2,22 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\CarbonImmutable;
 use DateTime;
 use EncoreDigitalGroup\Tachyon\Exceptions\TachyonException;
+use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
 
 /**
  * @internal
  */
 trait TimeDiff
 {
-    private const string FORMAT = "Y-m-d- H:i:s";
-
     /** @throws TachyonException */
     public function unixDiffInSeconds(?DateTime $targetDateTime = null): float|int
     {
         if (is_null($targetDateTime)) {
-            $targetDateTimeString = CarbonImmutable::now()->format(self::FORMAT);
+            $targetDateTimeString = static::now()->format(TimestampFormat::STANDARD);
         } else {
-            $targetDateTimeString = $targetDateTime->format(self::FORMAT);
+            $targetDateTimeString = $targetDateTime->format(TimestampFormat::STANDARD);
         }
 
         $sourceDateTime = static::now()->setTimezone($this->targetTimezone)->toDateTimeString();
@@ -28,7 +26,7 @@ trait TimeDiff
             throw new TachyonException;
         }
 
-        $targetDateTime = static::createFromFormat(self::FORMAT, $targetDateTimeString, $this->targetTimezone);
+        $targetDateTime = static::createFromFormat(TimestampFormat::STANDARD, $targetDateTimeString, $this->targetTimezone);
 
         if (!$targetDateTime instanceof static) {
             throw new TachyonException("Invalid targetDateTime Provided.");

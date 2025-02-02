@@ -4,18 +4,15 @@ namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use Carbon\Exceptions\InvalidFormatException;
 use DateTimeZone;
+use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
+use EncoreDigitalGroup\Tachyon\Support\Timezones\Timezone;
 
-/**
- * @internal
- */
+/** @internal */
 trait GenericHelpers
 {
-    private const string FORMAT_MDY = "m/d/y";
-    private const string TIMEZONE_UTC = "UTC";
+    protected DateTimeZone|string $targetTimezone = Timezone::UTC;
 
-    protected DateTimeZone|string $targetTimezone = self::TIMEZONE_UTC;
-
-    public static function fromArrayIndex(array $array = [], int|string $index = 0, string $format = self::FORMAT_MDY): ?static
+    public static function fromArrayIndex(array $array, int|string $index, string $format = TimestampFormat::MDY): ?static
     {
         try {
             $date = static::createFromFormat($format, $array[$index]);
@@ -26,12 +23,12 @@ trait GenericHelpers
         return $date;
     }
 
-    public static function mdyFromArrayIndex(array $array = [], int|string $index = 0): ?static
+    public static function mdyFromArrayIndex(array $array, int|string $index): ?static
     {
         return static::fromArrayIndex($array, $index);
     }
 
-    public function setTargetTimezone(string $targetTimezone = self::TIMEZONE_UTC): static
+    public function setTargetTimezone(string $targetTimezone = Timezone::UTC): static
     {
         $this->setTimezone($targetTimezone);
 

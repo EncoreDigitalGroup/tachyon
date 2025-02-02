@@ -4,6 +4,7 @@ namespace EncoreDigitalGroup\Tachyon\Traits;
 
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
+use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
 
 /**
  * @internal
@@ -14,16 +15,16 @@ trait KeyTimeIndicators
 
     public function startingSoon(): bool
     {
-        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
         if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
         $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
-        $oneHourFromStartTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())?->subHours();
+        $oneHourFromStartTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())?->subHours();
         $now = static::now()->setTimezone($this->targetTimezone);
-        $isToday = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
+        $isToday = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->isToday();
 
@@ -37,8 +38,8 @@ trait KeyTimeIndicators
             return false;
         }
 
-        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $startTime, $this->targetTimezone);
-        $endDateTime = static::createFromFormat("Y-m-d H:i:s", $endTime, $this->targetTimezone);
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $startTime, $this->targetTimezone);
+        $endDateTime = static::createFromFormat(TimestampFormat::STANDARD, $endTime, $this->targetTimezone);
 
         if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
@@ -54,7 +55,7 @@ trait KeyTimeIndicators
     public function withinThreeHours(): bool
     {
         $now = static::now()->setTimezone($this->targetTimezone);
-        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
         if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
@@ -62,7 +63,7 @@ trait KeyTimeIndicators
 
         $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
 
-        $threeHoursBefore = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString())
+        $threeHoursBefore = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->subHours(3);
 
@@ -72,7 +73,7 @@ trait KeyTimeIndicators
 
     public function isToday(): bool
     {
-        $startDateTime = static::createFromFormat("Y-m-d H:i:s", $this->toDateTimeString());
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
         if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;

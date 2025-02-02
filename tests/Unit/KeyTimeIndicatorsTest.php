@@ -41,7 +41,7 @@ test("Within Three Hours is False", function (): void {
 });
 
 test("Is Today is True", function (): void {
-    $tachyon = Tachyon::now()->addHours(4);
+    $tachyon = Tachyon::now()->addMinutes(15);
 
     expect($tachyon->isToday())->toBeTrue();
 });

@@ -39,6 +39,7 @@ yarn-error.log
 
 #JetBrains
 .idea/laravel-idea-personal.xml
+.idea/blade.xml
 
 # Laravel Homestead
 Homestead.json

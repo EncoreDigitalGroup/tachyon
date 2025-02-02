@@ -8,6 +8,7 @@ use EncoreDigitalGroup\Tachyon\Exceptions\TachyonException;
 
 /**
  * @internal
+ *
  * @mixin CarbonInterface
  */
 trait TimeDiff
@@ -17,15 +18,15 @@ trait TimeDiff
     /** @throws TachyonException */
     public function unixDiffInSeconds(?DateTime $targetDateTime = null): float|int
     {
-        if(is_null($targetDateTime)) {
-            $targetDateTime = static::now()->format(self::FORMAT);
+        if (is_null($targetDateTime)) {
+            $targetDateTimeString = static::now()->format(self::FORMAT);
+        } else {
+            $targetDateTimeString = $targetDateTime->format(self::FORMAT);
         }
-
-        $targetDateTimeString = $targetDateTime->format(self::FORMAT);
 
         $sourceDateTime = static::now()->setTimezone($this->targetTimezone)->toDateTimeString();
 
-        if ($sourceDateTime === '' || $sourceDateTime === '0') {
+        if ($sourceDateTime === "" || $sourceDateTime === "0") {
             throw new TachyonException;
         }
 

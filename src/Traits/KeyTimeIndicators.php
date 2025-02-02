@@ -2,13 +2,11 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\CarbonInterface;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
 
 /**
  * @internal
- * @mixin CarbonInterface
  */
 trait KeyTimeIndicators
 {

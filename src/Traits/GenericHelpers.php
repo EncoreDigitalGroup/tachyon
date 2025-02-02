@@ -2,14 +2,12 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Carbon\Exceptions\InvalidFormatException;
 use DateTimeZone;
 
 /**
  * @internal
- * @mixin CarbonInterface
  */
 trait GenericHelpers
 {
@@ -18,7 +16,7 @@ trait GenericHelpers
 
     protected DateTimeZone|string $targetTimezone = self::TIMEZONE_UTC;
 
-    public static function fromArrayIndex(array $array = [], int|string $index = 0, string $format = self::FORMAT_MDY): ?static
+    public static function fromArrayIndex(array $array = [], int|string $index = 0, string $format = self::FORMAT_MDY): ?CarbonInterface
     {
         try {
             $date = static::createFromFormat($format, $array[$index]);
@@ -29,7 +27,7 @@ trait GenericHelpers
         return $date;
     }
 
-    public static function mdyFromArrayIndex(array $array = [], int|string $index = 0): ?static
+    public static function mdyFromArrayIndex(array $array = [], int|string $index = 0): ?CarbonInterface
     {
         return static::fromArrayIndex($array, $index);
     }

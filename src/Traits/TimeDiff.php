@@ -12,13 +12,9 @@ use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
 trait TimeDiff
 {
     /** @throws TachyonException */
-    public function unixDiffInSeconds(?DateTime $targetDateTime = null): float|int
+    public function unixDiffInSeconds(DateTime $targetDateTime): float|int
     {
-        if (is_null($targetDateTime)) {
-            $targetDateTimeString = static::now()->format(TimestampFormat::STANDARD);
-        } else {
-            $targetDateTimeString = $targetDateTime->format(TimestampFormat::STANDARD);
-        }
+        $targetDateTimeString = $targetDateTime->format(TimestampFormat::STANDARD);
 
         $sourceDateTime = static::now()->setTimezone($this->targetTimezone)->toDateTimeString();
 

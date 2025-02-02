@@ -27,7 +27,8 @@
     ],
     "require": {
         "php": "^8.3",
-        "nesbot/carbon": "^3.0"
+        "nesbot/carbon": "^3.0",
+        "illuminate/support": "^11.41"
     },
     "require-dev": {
         "pestphp/pest": "^2.34 || ^3.0",

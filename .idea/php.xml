@@ -10,6 +10,11 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="f6f94d3b-245c-485e-8eae-038934ee625c" timeout="30000" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
@@ -108,12 +113,14 @@
       <path value="$PROJECT_DIR$/vendor/brick/math" />
       <path value="$PROJECT_DIR$/vendor/tomasvotruba/cognitive-complexity" />
       <path value="$PROJECT_DIR$/vendor/phpstan/extension-installer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="f6f94d3b-245c-485e-8eae-038934ee625c" tool_path="$PROJECT_DIR$/vendor/bin/phpstan" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
@@ -123,6 +130,11 @@
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
     </phpunit_settings>
+  </component>
+  <component name="Psalm">
+    <Psalm_settings>
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="f6f94d3b-245c-485e-8eae-038934ee625c" timeout="60000" />
+    </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />

@@ -28,9 +28,9 @@ trait GenericHelpers
         return static::fromArrayIndex($array, $index);
     }
 
-    public function setTargetTimezone(string $targetTimezone = Timezone::UTC): static
+    public function setTargetTimezone(string $timezone = Timezone::UTC): static
     {
-        $this->setTimezone($targetTimezone);
+        $this->setTimezone($timezone);
 
         return $this;
     }

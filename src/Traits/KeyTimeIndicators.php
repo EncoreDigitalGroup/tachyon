@@ -23,9 +23,8 @@ trait KeyTimeIndicators
             throw new InvalidStartTimeProvidedException;
         }
 
-        $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
         $oneHourFromStartTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())?->subHours();
-        $now = static::now()->setTimezone($this->targetTimezone);
+        $now = static::now()->setTargetTimezone($this->targetTimezone);
         $isToday = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->isToday();

@@ -3,13 +3,15 @@
 use EncoreDigitalGroup\Tachyon\Tachyon;
 
 test("Starting Soon is True", function (): void {
-    $tachyon = Tachyon::now()->addMinutes(15);
+    $tachyon = Tachyon::now()
+        ->addMinutes(15);
 
     expect($tachyon->startingSoon())->toBeTrue();
 });
 
 test("Starting Soon is False", function (): void {
-    $tachyon = Tachyon::now()->addHours(2);
+    $tachyon = Tachyon::now()
+        ->addHours(2);
 
     expect($tachyon->startingSoon())->toBeFalse();
 });

@@ -2,124 +2,89 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidEndTimeProvidedException;
 use EncoreDigitalGroup\Tachyon\Exceptions\InvalidStartTimeProvidedException;
+use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
+use Illuminate\Support\Carbon;
 
-/** @internal */
+/**
+ * @internal
+ */
 trait KeyTimeIndicators
 {
-    /**
-     * @throws InvalidStartTimeProvidedException
-     */
-    public function startingSoon(?string $startTime = null): bool
+    use GenericHelpers;
+
+    public function startingSoon(): bool
     {
-        if ($startTime == null) {
-            return false;
-        }
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
-        $targetTimezone = $this->targetTimezone;
-
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
-
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof CarbonInterface) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        $startDateTime = $startDateTime->setTimezone($targetTimezone);
-        $oneHourFromStartTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->subHours(1); // @phpstan-ignore-line
-        $now = Carbon::now()->setTimezone($targetTimezone);
-        $isToday = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->isToday(); // @phpstan-ignore-line
+        $oneHourFromStartTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())?->subHours();
+        $now = static::now()->setTimezone($this->targetTimezone);
+        $isToday = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
+            ?->setTimezone($this->targetTimezone)
+            ->isToday();
 
-        if (($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday)) {
-            return true;
-        }
-
-        return false;
+        // @phpstan-ignore-line
+        return ($now < $startDateTime) && ($now > $oneHourFromStartTime) && ($isToday);
     }
 
-    /**
-     * @throws InvalidStartTimeProvidedException
-     * @throws InvalidEndTimeProvidedException
-     */
     public function happeningNow(?string $startTime = null, ?string $endTime = null): bool
     {
         if ($startTime == null || $endTime == null) {
             return false;
         }
 
-        $targetTimezone = $this->targetTimezone;
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime, $targetTimezone);
-        $endDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $endTime, $targetTimezone);
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $startTime, $this->targetTimezone);
+        $endDateTime = static::createFromFormat(TimestampFormat::STANDARD, $endTime, $this->targetTimezone);
 
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        if (! $endDateTime) {
+        if (!$endDateTime instanceof static) {
             throw new InvalidEndTimeProvidedException;
         }
 
-        if ($startDateTime < Carbon::now($targetTimezone) && $endDateTime > Carbon::now($targetTimezone)) {
-            return true;
-        }
-
-        return false;
+        return $startDateTime < static::now($this->targetTimezone) && $endDateTime > static::now($this->targetTimezone);
     }
 
-    /**
-     * @throws InvalidStartTimeProvidedException
-     */
-    public function withinThreeHours(?string $startTime = null): bool
+    public function withinThreeHours(): bool
     {
-        if ($startTime == null) {
-            return false;
-        }
+        $now = static::now()->setTimezone($this->targetTimezone);
+        $startDateTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
-        $targetTimezone = $this->targetTimezone;
-        $now = Carbon::now()->setTimezone($targetTimezone);
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
-
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof static) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        $startDateTime = $startDateTime->setTimezone($targetTimezone);
+        $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
 
-        $threeHoursBefore = Carbon::createFromFormat('Y-m-d H:i:s', $startTime)->setTimezone($targetTimezone)->subHours(3); // @phpstan-ignore-line
+        $threeHoursBefore = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
+            ?->setTimezone($this->targetTimezone)
+            ->subHours(3);
 
-        if ($now > $threeHoursBefore && $now < $startDateTime) {
-            return true;
-        }
-
-        return false;
+        // @phpstan-ignore-line
+        return $now > $threeHoursBefore && $now < $startDateTime;
     }
 
-    /**
-     * @throws InvalidStartTimeProvidedException
-     */
-    public function isToday(?string $startTime = null): bool
+    public function isToday(): bool
     {
-        if ($startTime == null) {
-            return false;
-        }
+        $startDateTime = Carbon::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString());
 
-        $targetTimezone = $this->targetTimezone;
-        $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $startTime);
-
-        if (! $startDateTime) {
+        if (!$startDateTime instanceof CarbonInterface) {
             throw new InvalidStartTimeProvidedException;
         }
 
-        $startDateTime = $startDateTime->setTimezone($targetTimezone);
+        $startDateTime = $startDateTime->setTimezone($this->targetTimezone);
 
         $isToday = $startDateTime->isToday();
-        $now = Carbon::now()->setTimezone($targetTimezone);
+        $now = static::now()->setTimezone($this->targetTimezone);
 
-        if ($isToday && $now < $startDateTime) {
-            return true;
-        }
-
-        return false;
+        return $isToday && $now < $startDateTime;
     }
 }

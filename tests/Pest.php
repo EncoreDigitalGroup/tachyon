@@ -12,7 +12,7 @@
 */
 
 // uses(Tests\TestCase::class)->in('Feature');
-uses(EncoreDigitalGroup\Tachyon\Tests\TestCase::class)->in('Unit');
+uses(EncoreDigitalGroup\Tachyon\Tests\TestCase::class)->in("Unit");
 //use Tests\PackageTestCase;
 
 //uses(PackageTestCase::class)->in(__DIR__);
@@ -39,7 +39,7 @@ uses(EncoreDigitalGroup\Tachyon\Tests\TestCase::class)->in('Unit');
 |
 */
 
-function something()
+function something(): void
 {
     // ..
 }

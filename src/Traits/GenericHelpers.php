@@ -2,16 +2,20 @@
 
 namespace EncoreDigitalGroup\Tachyon\Traits;
 
-use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
+use DateTimeZone;
+use EncoreDigitalGroup\Tachyon\Support\TimestampFormat;
+use EncoreDigitalGroup\Tachyon\Support\Timezones\Timezone;
 
 /** @internal */
 trait GenericHelpers
 {
-    public static function fromArrayIndex(array $array, int|string $index, string $format): ?Carbon
+    protected DateTimeZone|string $targetTimezone = Timezone::UTC;
+
+    public static function fromArrayIndex(array $array, int|string $index, string $format = TimestampFormat::MDY): ?static
     {
         try {
-            $date = Carbon::createFromFormat($format, $array[$index]);
+            $date = static::createFromFormat($format, $array[$index]);
         } catch (InvalidFormatException) {
             $date = null;
         }
@@ -19,8 +23,15 @@ trait GenericHelpers
         return $date;
     }
 
-    public static function mdyFromArrayIndex(array $array, int|string $index): ?Carbon
+    public static function mdyFromArrayIndex(array $array, int|string $index): ?static
     {
-        return static::fromArrayIndex($array, $index, 'm/d/y');
+        return static::fromArrayIndex($array, $index);
+    }
+
+    public function setTargetTimezone(string $timezone = Timezone::UTC): static
+    {
+        $this->setTimezone($timezone);
+
+        return $this;
     }
 }

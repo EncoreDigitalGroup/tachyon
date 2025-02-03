@@ -24,7 +24,7 @@ trait KeyTimeIndicators
         }
 
         $oneHourFromStartTime = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())?->subHours();
-        $now = static::now()->setTargetTimezone($this->targetTimezone);
+        $now = static::now()->setTimezone($this->targetTimezone);
         $isToday = static::createFromFormat(TimestampFormat::STANDARD, $this->toDateTimeString())
             ?->setTimezone($this->targetTimezone)
             ->isToday();
